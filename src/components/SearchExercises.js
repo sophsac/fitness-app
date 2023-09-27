@@ -24,25 +24,24 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
     // pulls data from api for search bar
     const searchHandler = async () => {
-        if(search) {
-            const exercisesData = await fetchData("https://exercisedb.p.rapidapi.com/exercises", exerciseOptions);
+      if(search) {
+          const exercisesData = await fetchData("https://exercisedb.p.rapidapi.com/exercises", exerciseOptions);
 
-            const searchedExercises = exercisesData.filter(
-                (exercise) => exercise.name.toLowerCase().includes(search)
-                || exercise.target.toLowerCase().includes(search)
-                || exercise.equipment.toLowerCase().includes(search)
-                || exercise.bodyPart.toLowerCase().includes(search)
-            );
-            window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
+          const searchedExercises = exercisesData.filter(
+              (exercise) => exercise.name.toLowerCase().includes(search)
+              || exercise.target.toLowerCase().includes(search)
+              || exercise.equipment.toLowerCase().includes(search)
+              || exercise.bodyPart.toLowerCase().includes(search)
+          );
+          window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
 
-            setSearch('');
-            setExercises(searchedExercises);
-        }
-
+          setSearch('');
+          setExercises(searchedExercises);
+      }
     };
 
   return (
-    <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
+    <Stack alignItems="center" mt="25px" justifyContent="center" p="20px">
       <Typography
         fontWeight={700}
         sx={{ fontSize: { lg: "44px", sx: "30px" } }}
