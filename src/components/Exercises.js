@@ -10,6 +10,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const exercisesPerPage = 9;
+    console.log(exercises);
 
     // to show consecutive exercises to paginate
     const indexOfLastExercise = currentPage * exercisesPerPage;

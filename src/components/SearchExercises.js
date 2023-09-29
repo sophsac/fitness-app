@@ -11,30 +11,50 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
     // display muscle categories as page loads 
     // called at the start so dependency array is empty
+    // useEffect(() => {
+    //   const fetchExercisesData = async () => {
+    //     const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
+  
+    //     setBodyParts(['all', ...bodyPartsData]);
+    //   };
+    //   fetchExercisesData();
+    // }, []);
+
     useEffect(() => {
       const fetchExercisesData = async () => {
-        const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
-  
-        setBodyParts(['all', ...bodyPartsData]);
+        try {
+          const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
+    
+          if (Array.isArray(bodyPartsData)) {
+            setBodyParts(['all', ...bodyPartsData]);
+          } else {
+            console.error('bodyPartsData is not an array:', bodyPartsData);
+            // Handle the non-array case if needed
+          }
+        } catch (error) {
+          console.error('Error fetching bodyPartsData:', error);
+          // Handle the error if needed
+        }
       };
       fetchExercisesData();
     }, []);
+    
 
     // pulls data from api for search bar
     const searchHandler = async () => {
       if(search) {
-          const exercisesData = await fetchData("https://exercisedb.p.rapidapi.com/exercises", exerciseOptions);
+        const exercisesData = await fetchData("https://exercisedb.p.rapidapi.com/exercises", exerciseOptions);
 
-          const searchedExercises = exercisesData.filter(
-            (exercise) => exercise.name.toLowerCase().includes(search)
-            || exercise.target.toLowerCase().includes(search)
-            || exercise.equipment.toLowerCase().includes(search)
-            || exercise.bodyPart.toLowerCase().includes(search)
-          );
-          window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
+        const searchedExercises = exercisesData.filter((exercise) => 
+          exercise.name.toLowerCase().includes(search)
+          || exercise.target.toLowerCase().includes(search)
+          || exercise.equipment.toLowerCase().includes(search)
+          || exercise.bodyPart.toLowerCase().includes(search)
+        );
+        window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
 
-          setSearch('');
-          setExercises(searchedExercises);
+        setSearch('');
+        setExercises(searchedExercises);
       }
     };
 
@@ -82,7 +102,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
       </Box>
 
       <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
-        <HorizontalScrollbar data={bodyParts} bodyParts bodyPart={bodyPart} setBodyPart={setBodyPart} />
+        <HorizontalScrollbar data={bodyParts} bodyPart={bodyPart} setBodyPart={setBodyPart} isBodyParts/>
       </Box>
 
     </Stack>
