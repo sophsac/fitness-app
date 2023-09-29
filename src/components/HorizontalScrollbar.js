@@ -36,6 +36,7 @@ const HorizontalScrollbar = ({ data, setBodyPart, bodyPart, isBodyParts }) => (
         title={item.id || item}
         m="0 40px"
       >
+        {/* inside home or exercise page . body part card or exercise card */}
         {isBodyParts ? <BodyPart item={item} setBodyPart={setBodyPart} bodyPart={bodyPart} /> : <ExerciseCard exercise={item} /> }
       </Box>
     ))}
