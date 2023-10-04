@@ -15,7 +15,14 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     // to show consecutive exercises to paginate
     const indexOfLastExercise = currentPage * exercisesPerPage;
     const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-    const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+    if (!Array.isArray(exercises)) {
+      console.error('exercises is not an array:', exercises);
+      // Handle the non-array case if needed
+    } else {
+      const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+    }
+    // const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+
 
     const paginate = (e, value) => {
         setCurrentPage(value);
